@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gamerz.config.ConfigurationParameters;
 import com.gamerz.utils.GameUtils;
 
+@SuppressWarnings("unchecked")
 public class Ship extends Element {
 
 	public Ship(Map parameters, ImageInfo imageInfo) {
@@ -30,7 +31,6 @@ public class Ship extends Element {
 		}
 		spriteBatch.draw(this.imageInfo.texture, posX, posY, 45, 45, width, height, 1, 1, imageInfo.angle, srcX, srcY,
 				width, height, false, false);
-
 	}
 
 	@Override
@@ -44,6 +44,7 @@ public class Ship extends Element {
 			velocity[0] += forward[0] * acceleration;
 			velocity[1] += forward[1] * acceleration;
 		}
+		// Adds a friction to the velocity
 		velocity[0] *= 1 - ConfigurationParameters.FRICTION_FACTOR;
 		velocity[1] *= 1 - ConfigurationParameters.FRICTION_FACTOR;
 		imageInfo.angle += angleVel;
