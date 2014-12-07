@@ -20,10 +20,9 @@ public class Asteroids extends ApplicationAdapter {
 	public void create() {
 		batch = new SpriteBatch();
 		// Initialize the ship
-		ImageInfo shipImageInfo = new ImageInfo(100, 100, 0, 45, 90, 90, 45, 0, "double_ship.png");
+		ImageInfo shipImageInfo = new ImageInfo(300, 100, 45, 45, 90, 90, 45, 180, "double_ship.png");
 		java.util.Map<String, Object> shipParameters = new HashMap<String, Object>();
 		shipParameters.put("vel", new Double[] { 0d, 0d });
-		shipParameters.put("acc", 0d);
 		shipParameters.put("angleVel", 0d);
 		shipParameters.put("thrust", false);
 		ship = new Ship(shipParameters, shipImageInfo);

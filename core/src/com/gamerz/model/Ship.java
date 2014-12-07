@@ -37,30 +37,29 @@ public class Ship extends Element {
 	public void update() {
 		Double[] velocity = (Double[]) this.parameters.get("vel");
 		double angleVel = (Double) this.parameters.get("angleVel");
-		double acceleration = (Double) this.parameters.get("acc");
+		imageInfo.posX += velocity[0];
+		imageInfo.posY += velocity[1];
+		System.out.println("Thrust: " + this.parameters.get("thrust"));
+		System.out.println("Velx: " + velocity[0]);
+		System.out.println("Vely: " + velocity[1]);
 		if ((Boolean) this.parameters.get("thrust") == true) {
-			// Calculate the foward direction of the ship
+			// Calculate the forward direction of the ship
 			double[] forward = GameUtils.angleToVector(Math.toRadians(imageInfo.angle));
-			velocity[0] += forward[0] * acceleration;
-			velocity[1] += forward[1] * acceleration;
+			velocity[0] += forward[0] * ConfigurationParameters.ACC_FACTOR;
+			velocity[1] += forward[1] * ConfigurationParameters.ACC_FACTOR;
 		}
 		// Adds a friction to the velocity
 		velocity[0] *= 1 - ConfigurationParameters.FRICTION_FACTOR;
 		velocity[1] *= 1 - ConfigurationParameters.FRICTION_FACTOR;
 		imageInfo.angle += angleVel;
-		imageInfo.posX += velocity[0];
-		imageInfo.posY += velocity[1];
 	}
 
 	public void accelerate() {
-		double acceleration = (Double) this.parameters.get("acc");
-		this.parameters.put("acc", acceleration + ConfigurationParameters.ACC_FACTOR);
 		this.parameters.put("thrust", true);
 	}
 
 	public void stopAccelerate() {
 		this.parameters.put("thrust", false);
-		this.parameters.put("acc", 0d);
 	}
 
 	public void increaseAngle(double factor) {
@@ -71,6 +70,16 @@ public class Ship extends Element {
 
 	public void stopAccAngle() {
 		this.parameters.put("angleVel", 0d);
+	}
+
+	public static double round(double value, int places) {
+		if (places < 0) {
+			throw new IllegalArgumentException();
+		}
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		value = Math.floor(value);
+		return value / factor;
 	}
 
 }
